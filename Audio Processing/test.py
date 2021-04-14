@@ -1,8 +1,11 @@
 import tensorflow as tf
 
-a = tf.constant("Hello World!")
-
-
 print('')
-print(a.numpy())
+print(tf.__version__)
 print('')
+
+import keras as k
+
+l0 = k.layers.Dense(units=1)
+model = k.Sequential(l0)
+
