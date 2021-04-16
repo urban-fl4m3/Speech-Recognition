@@ -1,5 +1,3 @@
-import test_system
-import fashion_mnist
+import audio_recognition_network
 
-#test_system.run()
-fashion_mnist.run()
+audio_recognition_network.run()
