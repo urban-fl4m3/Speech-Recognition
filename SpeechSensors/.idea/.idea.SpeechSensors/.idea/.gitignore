@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/contentModel.xml
+/modules.xml
+/projectSettingsUpdater.xml
+/.idea.SpeechSensors.iml
+# Datasource local storage ignored files
+/../../../../../../../:\Git Projects\Neural Speech Recognition Unity\SpeechSensors\.idea\.idea.SpeechSensors\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
