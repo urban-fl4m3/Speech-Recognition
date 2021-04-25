@@ -1,3 +1,4 @@
+using Components;
 using UnityEngine;
 
 public class EntryPoint : MonoBehaviour
@@ -6,6 +7,10 @@ public class EntryPoint : MonoBehaviour
     
     private void Start()
     {
-        var room = new Room(_roomObject);
+        var sensors = FindObjectsOfType<SensorComponent>();
+        var microphones = FindObjectsOfType<MicrophoneComponent>();
+        var room = new Room(_roomObject, sensors, microphones);
+        
+        Debug.Log(room.ToString());
     }
 }

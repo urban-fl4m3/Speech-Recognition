@@ -77,8 +77,8 @@ def run():
     files_ds = tf.data.Dataset.from_tensor_slices(train_files)
     waveforms_ds = files_ds.map(get_waveform_and_label, num_parallel_calls=autotune)
 
-    rows = 3
-    cols = 3
+    rows = 5
+    cols = 4
     n = rows * cols
     fig, axes = plt.subplots(rows, cols, figsize=(10, 12))
 
@@ -121,8 +121,8 @@ def run():
     spectrogram_ds = waveforms_ds.map(
         get_spectrogram_and_label_id, num_parallel_calls=autotune)
 
-    rows = 3
-    cols = 3
+    rows = 5
+    cols = 4
     n = rows * cols
     fig, axes = plt.subplots(rows, cols, figsize=(10, 10))
     for i, (spectrogram, label_id) in enumerate(spectrogram_ds.take(n)):
