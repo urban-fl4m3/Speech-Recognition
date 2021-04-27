@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Agents;
 using Components;
 using UnityEngine;
 
@@ -6,11 +7,12 @@ public class Room
 {
     private readonly GameObject _roomObject;
 
-    private readonly RecognitionSystem _recognitionSystem;
-    
+    public RecognitionSystem System { get; }
+
     public Room(GameObject roomObject,
         IReadOnlyList<SensorComponent> sensorComponents,
-        IReadOnlyList<MicrophoneComponent> microphoneComponents)
+        IReadOnlyList<MicrophoneComponent> microphoneComponents,
+        MlAgent agent, EntryPoint point)
     {
         _roomObject = roomObject;
 
@@ -30,12 +32,12 @@ public class Room
             microphones[i] = new Microphone(microphoneComponents[i]);
         }
 
-        _recognitionSystem = new RecognitionSystem(sensors, microphones);
+        System = new RecognitionSystem(sensors, microphones, agent, point);
     }
 
     public override string ToString()
     {
-        return $"Room: {_roomObject.name} / Sensors count: {_recognitionSystem.Sensors.Length} / Microphones count: " +
-               $"{_recognitionSystem.Microphones.Length}";
+        return $"Room: {_roomObject.name} / Sensors count: {System.Sensors.Length} / Microphones count: " +
+               $"{System.Microphones.Length}";
     }
 }

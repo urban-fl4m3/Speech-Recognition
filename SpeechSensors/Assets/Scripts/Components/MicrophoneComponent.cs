@@ -8,12 +8,13 @@ namespace Components
         public event EventHandler SignalReceived;
         
         [SerializeField] private float _radius;
+        [SerializeField] private bool _enableEditorDebug;
 
         public float Radius => _radius;
 
         private void OnDrawGizmos()
         {
-            if (EntryPoint.EnableDebugMode || Application.isEditor)
+            if ((EntryPoint.EnableDebugMode || Application.isEditor) && _enableEditorDebug)
             {
                 Gizmos.color = Color.magenta;
                 Gizmos.DrawWireSphere(transform.position, _radius);

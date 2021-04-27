@@ -11,7 +11,9 @@ namespace Components
         [SerializeField] private float _maxRadius;
 
         private float _radius;
-        
+
+        public float SpreadSpeed => _spreadSpeed;
+
         public void PushSignal()
         {
             _rigidbody.MovePosition(transform.position);

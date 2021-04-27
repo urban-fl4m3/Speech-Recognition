@@ -1,0 +1,29 @@
+{
+    "PositionRecon": {
+        "checkpoints": [
+            {
+                "steps": 499946,
+                "file_path": "results\\ppo\\PositionRecon\\PositionRecon-499946.onnx",
+                "reward": 8699.708678906964,
+                "creation_time": 1619481061.6586125
+            },
+            {
+                "steps": 500133,
+                "file_path": "results\\ppo\\PositionRecon\\PositionRecon-500133.onnx",
+                "reward": 8764.778574503385,
+                "creation_time": 1619481061.7383797
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500133,
+            "file_path": "results\\ppo\\PositionRecon.onnx",
+            "reward": 8764.778574503385,
+            "creation_time": 1619481061.7383797
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.25.1",
+        "torch_version": "1.7.1"
+    }
+}

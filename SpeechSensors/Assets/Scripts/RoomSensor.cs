@@ -16,6 +16,6 @@ public class RoomSensor
 
     public void React(float level)
     {
-        _sensorComponent.React(level);
+       // _sensorComponent.React(level);
     }
 }

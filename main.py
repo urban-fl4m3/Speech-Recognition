@@ -1,3 +1,3 @@
-import audio_recognition_network
+import test_system
 
-audio_recognition_network.run()
+test_system.run()

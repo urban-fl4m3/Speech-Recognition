@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 5
+  _enableEditorDebug: 0
 --- !u!54 &5289807374228316176
 Rigidbody:
   m_ObjectHideFlags: 0

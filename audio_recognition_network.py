@@ -46,6 +46,10 @@ def plot_spectrogram(spectrogram, ax):
     ax.pcolormesh(x, y, log_spec, shading='auto')
 
 
+def get_hello_for_unity():
+    return "Hey, unity, i'm here!"
+
+
 def run():
     seed = 23
     tf.random.set_seed(seed)

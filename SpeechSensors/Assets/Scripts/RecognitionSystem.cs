@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Agents;
 using UnityEngine;
 
 public class RecognitionSystem
 {
+    public event EventHandler SensorsGotSignals;
+    
     public readonly RoomSensor[] Sensors;
     public readonly Microphone[] Microphones;
+    private readonly EntryPoint _point;
+    
+    public MlAgent Agent { get; }
 
     private readonly Dictionary<Microphone, float> _lastTimeSignalReceived
         = new Dictionary<Microphone, float>();
@@ -13,14 +20,16 @@ public class RecognitionSystem
     private float _timeElapsedSinceSignalReceived;
     private Microphone _firstMicrophoneGotSignal;
     
-    public RecognitionSystem(RoomSensor[] sensors, Microphone[] microphones)
+    public RecognitionSystem(RoomSensor[] sensors, Microphone[] microphones, MlAgent agent, EntryPoint point)
     {
         Sensors = sensors;
         Microphones = microphones;
+        _point = point;
+        Agent = agent;
 
         foreach (var microphone in microphones)
         {
-            microphone.SignalReceived += HandleSignalReceived;
+            // microphone.SignalReceived += HandleSignalReceived;
 
             foreach (var sensor in sensors)
             {
@@ -32,42 +41,38 @@ public class RecognitionSystem
         }
     }
 
-    private void HandleSignalReceived(object sender, EventArgs e)
+    public void ReactAllMics(float soundSpeed, Vector3 origin)
     {
-        var microphone = (Microphone) sender;
+        _lastTimeSignalReceived.Clear();
+        
+        foreach (var microphone in Microphones)
+        {
+            var dist = Vector3.Distance(microphone.Position, origin);
+            var t = dist / soundSpeed;
+        
+            var level = t / _point.ElapsedTimeFromRoundStart;
+        
+            // Debug.Log($"[Recognition System]: Microphone ({microphone.Name} got signal in" +
+                     // $" {t}s) ");
 
-        if (_firstMicrophoneGotSignal == null)
-        {
-            _firstMicrophoneGotSignal = microphone;
-            _timeElapsedSinceSignalReceived = Time.time;
+            foreach (var sensor in microphone.RegionSensors)
+            {
+                sensor.React(level);
+            }
+            
+            _lastTimeSignalReceived.Add(microphone, t);
         }
-        
-        if (_lastTimeSignalReceived.ContainsKey(microphone))
-        {
-            Debug.LogError("Multi sound is not supported!");
-        }
-        
-        var level = _timeElapsedSinceSignalReceived / Time.time;
-        
-        _timeElapsedSinceSignalReceived = Time.time;
-        _lastTimeSignalReceived.Add(microphone, _timeElapsedSinceSignalReceived);
 
-        Debug.Log($"[Recognition System]: Microphone ({microphone.Name} got signal in" +
-                  $" {_timeElapsedSinceSignalReceived}s) ");
-
-        foreach (var sensor in microphone.RegionSensors)
-        {
-            sensor.React(level);
-        }
-        
-        if (_lastTimeSignalReceived.Count == Microphones.Length)
-        {
-            CalculateSourcePosition();
-        }
+        CalculateSourcePosition();
     }
-
+    
     private void CalculateSourcePosition()
     {
-        Debug.Log("CALCULATING SOURCE POSITION");
+        SensorsGotSignals?.Invoke(this, EventArgs.Empty);
+        
+        Agent.enabled = true;
+
+        var values = _lastTimeSignalReceived.Select(k => k.Value).ToList();
+        Agent.AddObservations(values);
     }
 }
