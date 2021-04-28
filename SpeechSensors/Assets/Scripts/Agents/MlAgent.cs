@@ -64,17 +64,17 @@ namespace Agents
         
         public void Complete()
         {
-            Debug.Log("COMPLETE");
+            //Debug.Log("COMPLETE");
             
-            SetReward(9999f);
+            SetReward(20f);
             EndEpisode();
             UI.Instance.AddComplete();
         }
 
         public void Fail()
         {
-            Debug.Log("FAIL");
-            //SetReward(-1f);
+            //Debug.Log("FAIL");
+            SetReward(-20f);
             EndEpisode();
             UI.Instance.AddFail();
         }

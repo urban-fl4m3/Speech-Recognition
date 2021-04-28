@@ -89,10 +89,10 @@ public class EntryPoint : MonoBehaviour
         _timeSinceLastReward = Time.time;
 
         //Debug.Log($"REWARD FROM SCENE: {reward} / Distance: {dist}");
-        _room.System.Agent.AddRewardFromScene(dist);
+        _room.System.Agent.AddRewardFromScene((1 - dist/12) * 10);
 
 
-        if (_timeToEndRound >= 40)
+        if (_timeToEndRound >= 1)
         {
             _room.System.Agent.Fail();
             EndRound();

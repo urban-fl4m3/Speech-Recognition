@@ -29,7 +29,7 @@ public class RecognitionSystem
 
         foreach (var microphone in microphones)
         {
-            // microphone.SignalReceived += HandleSignalReceived;
+             microphone.SignalReceived += HandleSignalReceived;
 
             foreach (var sensor in sensors)
             {
@@ -39,6 +39,11 @@ public class RecognitionSystem
                 }
             }
         }
+    }
+
+    private void HandleSignalReceived(object sender, EventArgs e)
+    {
+            
     }
 
     public void ReactAllMics(float soundSpeed, Vector3 origin)

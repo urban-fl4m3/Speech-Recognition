@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace DefaultNamespace
@@ -31,7 +30,14 @@ namespace DefaultNamespace
 
         private void UpdateText()
         {
+            Debug.Log($"{_completes/(_failes + _completes)}%");
             _accuracy.text = $"Accuracy: {_completes/(_failes + _completes)}";
+
+            if (_failes + _completes >= 1000)
+            {
+                _failes = 0;
+                _completes = 0;
+            }
         }
         
 
