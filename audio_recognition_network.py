@@ -58,6 +58,7 @@ def run():
     data_dir = pathlib.Path('data/speech_commands')
 
     commands = np.array(tf.io.gfile.listdir(str(data_dir)))
+    commands = commands[commands != 'README.md']
 
     filenames = tf.io.gfile.glob(str(data_dir) + '/*/*')
     filenames = tf.random.shuffle(filenames)
