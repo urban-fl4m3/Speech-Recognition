@@ -4,6 +4,7 @@ import pathlib
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+import seaborn as sns
 
 from tensorflow.keras.layers.experimental import preprocessing
 from tensorflow.keras import layers
@@ -65,7 +66,7 @@ def run():
     num_samples = len(filenames)
 
     print('Number of total examples: ', num_samples)
-    print('Number of examples per label: ', len(tf.io.gfile.listdir(str(data_dir/commands[0]))))
+    print('Number of examples per label: ', len(tf.io.gfile.listdir(str(data_dir / commands[0]))))
     print('Example file tensor: ', filenames[0])
 
     train_files = filenames[:20]
@@ -214,7 +215,14 @@ def run():
     test_acc = sum(y_pred == y_true) / len(y_true)
     print(f'Test set accuracy: {test_acc:.0%}')
 
-    sample_file = data_dir/'no/01bb6a2a_nohash_0.wav'
+    confusion_matrix = tf.math.confusion_matrix(y_true, y_pred)
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(confusion_matrix, xticklabels=commands, yticklabels=commands, annot=True, fmt='g')
+    plt.xlabel('Prediction')
+    plt.ylabel('Labrl')
+    plt.show()
+
+    sample_file = data_dir / 'no/01bb6a2a_nohash_0.wav'
     sample_ds = preprocess_dataset([str(sample_file)])
 
     for spectrogram, label in sample_ds.batch(1):
