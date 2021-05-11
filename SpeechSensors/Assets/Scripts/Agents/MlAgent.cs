@@ -49,12 +49,13 @@ namespace Agents
         public override void OnActionReceived(float[] vectorAction)
         {
             var moveX = vectorAction[0] * 0.5f + 0.5f;
-            var moveZ = vectorAction[1] * 0.5f + 0.5f;
+            var moveY = vectorAction[1] * 0.5f + 0.5f;
+            var moveZ = vectorAction[2] * 0.5f + 0.5f;
 
             moveX = moveX * (_xBondRight - _xBondLeft) + _xBondLeft;
             moveZ = moveZ * (_zBondTop - _zBondBottom) + _zBondBottom;
             
-            transform.position = new Vector3(moveX, 0, moveZ);
+            transform.position = new Vector3(moveX, moveY, moveZ);
         }
 
         public void AddRewardFromScene(float amount)

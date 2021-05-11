@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class EntryPoint : MonoBehaviour
 {
-    public static bool EnableDebugMode { get; private set; }
+    public static bool EnableDebugMode => true;
     
     [SerializeField] private bool _enableDebugMod;
     [SerializeField] private GameObject _roomObject;
@@ -27,7 +27,6 @@ public class EntryPoint : MonoBehaviour
     
     private void Start()
     {
-        EnableDebugMode = _enableDebugMod;
         
         var x = transform.position.x;
         var z = transform.position.z;

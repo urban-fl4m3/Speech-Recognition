@@ -2,17 +2,17 @@
     "PositionRecon": {
         "checkpoints": [
             {
-                "steps": 21426,
-                "file_path": "results\\ppo\\PositionRecon\\PositionRecon-21426.onnx",
-                "reward": 329.94283312755624,
-                "creation_time": 1619547534.3893702
+                "steps": 5671,
+                "file_path": "results\\ppo\\PositionRecon\\PositionRecon-5671.onnx",
+                "reward": -17.883091355372226,
+                "creation_time": 1620650526.2202666
             }
         ],
         "final_checkpoint": {
-            "steps": 21426,
+            "steps": 5671,
             "file_path": "results\\ppo\\PositionRecon.onnx",
-            "reward": 329.94283312755624,
-            "creation_time": 1619547534.3893702
+            "reward": -17.883091355372226,
+            "creation_time": 1620650526.2202666
         }
     },
     "metadata": {

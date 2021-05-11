@@ -14,11 +14,8 @@ namespace Components
 
         private void OnDrawGizmos()
         {
-            if ((EntryPoint.EnableDebugMode || Application.isEditor) && _enableEditorDebug)
-            {
-                Gizmos.color = Color.magenta;
-                Gizmos.DrawWireSphere(transform.position, _radius);
-            }
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireSphere(transform.position, _radius);
         }
 
         private void OnCollisionEnter(Collision other)
