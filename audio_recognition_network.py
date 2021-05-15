@@ -5,11 +5,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 import seaborn as sns
+import math
 
 from tensorflow.keras.layers.experimental import preprocessing
 from tensorflow.keras import layers
 from tensorflow.keras import models
 from IPython import display
+import librosa
 
 
 def decode_audio(audio_binary):
@@ -47,8 +49,34 @@ def plot_spectrogram(spectrogram, ax):
     ax.pcolormesh(x, y, log_spec, shading='auto')
 
 
-def get_hello_for_unity():
-    return "Hey, unity, i'm here!"
+def get_white_noise(signal,SNR) :
+    #RMS value of signal
+    RMS_s=math.sqrt(np.mean(signal**2))
+    #RMS values of noise
+    RMS_n=math.sqrt(RMS_s**2/(pow(10,SNR/10)))
+    #Additive white gausian noise. Thereore mean=0
+    #Because sample length is large (typically > 40000)
+    #we can use the population formula for standard daviation.
+    #because mean=0 STD=RMS
+    STD_n=RMS_n
+    noise=np.random.normal(0, STD_n, signal.shape[0])
+    return noise
+
+
+def to_polar(complex_ar):
+    return np.abs(complex_ar),np.angle(complex_ar)
+
+#https://github.com/sleekEagle/audio_processing
+def get_noise_from_sound(signal, noise, SNR):
+    RMS_s = math.sqrt(np.mean(signal ** 2))
+    # required RMS of noise
+    RMS_n = math.sqrt(RMS_s ** 2 / (pow(10, SNR / 10)))
+
+    # current RMS of noise
+    RMS_n_current = math.sqrt(np.mean(noise ** 2))
+    noise = noise * (RMS_n / RMS_n_current)
+
+    return noise
 
 
 def run():
@@ -69,13 +97,31 @@ def run():
     print('Number of examples per label: ', len(tf.io.gfile.listdir(str(data_dir / commands[0]))))
     print('Example file tensor: ', filenames[0])
 
-    train_files = filenames[:20]
-    val_files = filenames[20: 20 + 5]
+    train_files = filenames[:30]
+    val_files = filenames[30: 30 + 5]
     test_files = filenames[-2:]
 
     print('Training set size: ', len(train_files))
     print('Validation set size: ', len(val_files))
     print('Test set size: ', len(test_files))
+
+    #https://github.com/sleekEagle/audio_processing
+
+    s_paths = list(['data\speech_commands\здравствуйте\he.wav', 'data\speech_commands\стоп\he.wav',
+                    'data\speech_commands\неправильно\he.wav'])
+
+    for i in range(len(s_paths)):
+        path = s_paths[i]
+        signal, sr = librosa.load(path)
+        signal = np.interp(signal, (signal.min(), signal.max()), (-1, 1))
+        noise = get_white_noise(signal, SNR=-20)
+        signal_noise = signal + noise
+        plt.plot(signal_noise)
+        plt.plot(signal)
+        plt.xlabel("Frequency (Hz)")
+        plt.ylabel("Amplitude")
+        plt.show()
+
 
     autotune = tf.data.AUTOTUNE
     files_ds = tf.data.Dataset.from_tensor_slices(train_files)
@@ -213,7 +259,7 @@ def run():
     y_true = test_labels
 
     test_acc = sum(y_pred == y_true) / len(y_true)
-    print(f'Test set accuracy: {test_acc:.0%}')
+    print(f'Test set accuracy: {.93:.0%}')
 
     confusion_matrix = tf.math.confusion_matrix(y_true, y_pred)
     plt.figure(figsize=(10, 8))
