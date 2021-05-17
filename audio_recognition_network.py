@@ -107,15 +107,16 @@ def run():
 
     #https://github.com/sleekEagle/audio_processing
 
-    s_paths = list(['data\speech_commands\здравствуйте\he.wav', 'data\speech_commands\стоп\he.wav',
-                    'data\speech_commands\неправильно\he.wav'])
+    s_paths = list(['data\speech_commands\здравствуйте\he1.wav', 'data\speech_commands\стоп\he.wav',
+                    'data\speech_commands\неправильно\he5.wav'])
 
     for i in range(len(s_paths)):
         path = s_paths[i]
         signal, sr = librosa.load(path)
         signal = np.interp(signal, (signal.min(), signal.max()), (-1, 1))
-        noise = get_white_noise(signal, SNR=-20)
+        noise = get_white_noise(signal, SNR=20)
         signal_noise = signal + noise
+        plt.xlim([0, 16000])
         plt.plot(signal_noise)
         plt.plot(signal)
         plt.xlabel("Frequency (Hz)")
@@ -259,7 +260,7 @@ def run():
     y_true = test_labels
 
     test_acc = sum(y_pred == y_true) / len(y_true)
-    print(f'Test set accuracy: {.93:.0%}')
+    print(f'Test set accuracy: {test_acc:.0%}')
 
     confusion_matrix = tf.math.confusion_matrix(y_true, y_pred)
     plt.figure(figsize=(10, 8))
