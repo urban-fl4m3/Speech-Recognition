@@ -107,21 +107,27 @@ def run():
 
     #https://github.com/sleekEagle/audio_processing
 
-    s_paths = list(['data\speech_commands\здравствуйте\he1.wav', 'data\speech_commands\стоп\he.wav',
-                    'data\speech_commands\неправильно\he5.wav'])
-
-    for i in range(len(s_paths)):
-        path = s_paths[i]
-        signal, sr = librosa.load(path)
-        signal = np.interp(signal, (signal.min(), signal.max()), (-1, 1))
-        noise = get_white_noise(signal, SNR=20)
-        signal_noise = signal + noise
-        plt.xlim([0, 16000])
-        plt.plot(signal_noise)
-        plt.plot(signal)
-        plt.xlabel("Frequency (Hz)")
-        plt.ylabel("Amplitude")
-        plt.show()
+    # name = 'he.wav'
+    # p1 = 'data\speech_commands\здравствуйте\\' + name
+    # p2 = 'data\speech_commands\стоп\\' + name
+    # p3 = 'data\speech_commands\неправильно\\' + name
+    #
+    # s_paths = list([p1, p2, p3])
+    # signals = list()
+    #
+    # for i in range(len(s_paths)):
+    #     path = s_paths[i]
+    #     signal, sr = librosa.load(path)
+    #     signal = np.interp(signal, (signal.min(), signal.max()), (-1, 1))
+    #     noise = get_white_noise(signal, SNR=-20)
+    #     signal_noise = signal + noise
+    #     signals.append(signal_noise)
+    #     plt.xlim([0, 16000])
+    #     # plt.plot(signal)
+    #     plt.plot(signal_noise)
+    #     # plt.xlabel("Frequency (Hz)")
+    #     # plt.ylabel("Amplitude")
+    #     plt.show()
 
 
     autotune = tf.data.AUTOTUNE
