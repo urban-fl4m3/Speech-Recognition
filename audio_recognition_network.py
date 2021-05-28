@@ -162,7 +162,7 @@ def run():
 
         fig, axes = plt.subplots(2, figsize=(12, 8))
         timescale = np.arange(waveform.shape[0])
-        axes[0].plot(timescale, waveform.numpy())
+        axes[0].plot(timescale, waveform.numpy(), color='black')
         axes[0].set_title('Waveform')
         axes[0].set_xlim([0, 16000])
         plot_spectrogram(spectrogram.numpy(), axes[1])
